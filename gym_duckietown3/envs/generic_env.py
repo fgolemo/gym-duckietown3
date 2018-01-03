@@ -10,6 +10,9 @@ from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGH
 from gym_duckietown3.road_layout import RoadLayout
 from gym_duckietown3.utils import get_point_from_circle_distribution
 
+ERROR_SHOULD_SPAWN_FIRST = "Child class hasn't spawned car yet. " \
+                           "Look at straight_env.py for an example of how and " \
+                           "when to spawn the car."
 
 class GenericEnv(gym.Env):
     def __init__(self, renderer="CPU", resolution=(84, 84), max_torque=10):
@@ -68,7 +71,14 @@ class GenericEnv(gym.Env):
         """ This is the buffer that is holding the last good rendering
         """
 
+        self.car_spawned = False
+        self.spawn_pos = None
+        self.spawn_orn = None
+
     def _step(self, action):
+        if not self.car_spawned:
+            raise Exception(ERROR_SHOULD_SPAWN_FIRST)
+
         self.run_action(action)
 
         obs = self.get_observation()
@@ -83,8 +93,7 @@ class GenericEnv(gym.Env):
         return obs, rew, done, misc
 
     def _reset(self):
-        # TODO
-        pass
+        self.reset_position()
 
     def _seed(self, seed=None):
         np.random.seed(seed)
@@ -202,7 +211,7 @@ class GenericEnv(gym.Env):
 
                 road_pos = [actual_y, actual_x, 0]
                 road_orientation = pybullet.getQuaternionFromEuler([0, 0, road_rotation])
-                _ = pybullet.loadURDF("../assets/urdf/road/road_{}.urdf".format(road_urdf), road_pos, road_orientation)
+                _ = pybullet.loadURDF(PATH_TO_URDF + "road/road_{}.urdf".format(road_urdf), road_pos, road_orientation)
 
     def spawn_car(self, pos=(0, 0, 0), orn=(90, 0, 0)):
         """ Puts the robot into the world
@@ -214,6 +223,30 @@ class GenericEnv(gym.Env):
         :return: void
         """
 
+        self.spawn_pos = pos
+        self.spawn_orn = orn
+
+        start_pos, start_orn = self.get_spawn_pos_orn(pos, orn)
+
+        self.robotId = pybullet.loadURDF(
+            PATH_TO_URDF + "robot/robot_clean.urdf",
+            start_pos,
+            pybullet.getQuaternionFromEuler(start_orn)
+        )
+        self.car_spawned = True
+
+    def reset_position(self):
+        if not self.car_spawned:
+            raise Exception(ERROR_SHOULD_SPAWN_FIRST)
+
+        start_pos, start_orn = self.get_spawn_pos_orn(self.spawn_pos, self.spawn_orn)
+        pybullet.resetBasePositionAndOrientation(
+            self.robotId,
+            start_pos,
+            pybullet.getQuaternionFromEuler(start_orn)
+        )
+
+    def get_spawn_pos_orn(self, pos, orn):
         if pos[2] == 0:
             # if last position item is 0, no randomness
             start_pos = [pos[0], pos[1], .01]
@@ -230,11 +263,7 @@ class GenericEnv(gym.Env):
             rand_angle = np.random.uniform(orn[0] + orn[1], orn[0] + orn[2])
             start_orn = [0, 0, np.deg2rad(rand_angle)]
 
-        self.robotId = pybullet.loadURDF(
-            PATH_TO_URDF + "robot/robot_clean.urdf",
-            start_pos,
-            pybullet.getQuaternionFromEuler(start_orn)
-        )
+        return start_pos, start_orn
 
     def get_observation(self):
         """ get the image from the robot's cam

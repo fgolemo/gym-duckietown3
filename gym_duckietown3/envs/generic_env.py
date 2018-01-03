@@ -5,7 +5,7 @@ import time
 import pybullet
 from gym import spaces
 
-from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF
+from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGHT_DIRECTION, SHADOW
 from gym_duckietown3.road_layout import RoadLayout
 from gym_duckietown3.utils import get_point_from_circle_distribution
 
@@ -41,14 +41,27 @@ class GenericEnv(gym.Env):
 
         self._seed()
 
+        if self.cam_params is None:
+            self.cam_params = CAM_PARAMS
+
         if self.map is None:
             self.map = RoadLayout()
 
         self.generate_map(self.map)
 
-    def _step(self, a):
-        # TODO
-        pass
+    def _step(self, action):
+        # TODO actually execute action
+
+        obs = self.get_observation()
+        rew, done = self.get_reward()
+        misc = self.get_misc()
+
+        if not done:
+            # TODO see if the robot is out of bounds by position
+            # done = self.is_out_of_bounds()
+            pass
+
+        return obs, rew, done, misc
 
     def _reset(self):
         # TODO
@@ -65,6 +78,26 @@ class GenericEnv(gym.Env):
     def _close(self):
         # TODO
         pass
+
+    def get_reward(self):
+        """ Calculate the reward based on the current task
+
+        :return: reward as float value,
+                 done as boolean (only if necessary for task, otherwise always False)
+        """
+
+        # this should be implemented by child classes
+        raise NotImplementedError
+
+    def get_misc(self):
+        """ Get any task-specific misc information... only if applicable
+
+        :return: anything really
+        """
+
+        # (optional) should be overwritten by task
+
+        return None
 
     def generate_map(self, map):
         rm_height = map.map_rez[0]
@@ -102,20 +135,72 @@ class GenericEnv(gym.Env):
         """
 
         if pos[2] == 0:
+            # if last position item is 0, no randomness
             start_pos = [pos[0], pos[1], .01]
         else:
+            # otherwise get random pos within circle of radius pos[2]
             rand_x, rand_y = get_point_from_circle_distribution(*pos)
             start_pos = [rand_x, rand_y, .01]
 
         if orn[1] == 0 and orn[2] == 0:
+            # no randomness
             start_orn = [0, 0, np.deg2rad(orn[0])]
         else:
+            # pull starting orientation randomly from range
             rand_angle = np.random.uniform(orn[0] + orn[1], orn[0] + orn[2])
             start_orn = [0, 0, np.deg2rad(rand_angle)]
 
-        # print(start_pos, start_orn)
         self.robotId = pybullet.loadURDF(
             PATH_TO_URDF + "robot/robot_clean.urdf",
             start_pos,
             pybullet.getQuaternionFromEuler(start_orn)
         )
+
+    def get_observation(self):
+        """ get the image from the robot's cam
+
+        :return: Image as array (width, height, 3)
+        """
+
+        # get current position of cam and of cam target (both robot parts)
+        cam_state = pybullet.getLinkState(self.robotId, 4)
+        cam_pos = cam_state[0]
+
+        cam_target_state = pybullet.getLinkState(self.robotId, 5)
+        cam_target_pos = cam_target_state[0]
+
+        # get view matrix, which is the view position and angle of the cam
+        view_matrix = pybullet.computeViewMatrix(
+            cam_pos,
+            cam_target_pos,
+            self.cam_params.cameraUp
+        )
+
+        # the aspect probably doesn't change over the course of one gym run... but you know
+        aspect = self.cam_params.pixelWidth / self.cam_params.pixelHeight
+
+        # this calculates where the pixels are being put
+        projectionMatrix = pybullet.computeProjectionMatrixFOV(
+            self.cam_params.fov,
+            aspect,
+            self.cam_params.nearPlane,
+            self.cam_params.farPlane
+        )
+
+        # now actually render the image
+        img_arr = pybullet.getCameraImage(
+            self.cam_params.pixelWidth,
+            self.cam_params.pixelHeight,
+            view_matrix,
+            projectionMatrix,
+            shadow=SHADOW,
+            lightDirection=LIGHT_DIRECTION,
+            renderer=self.renderer
+        )
+
+        # w = img_arr[0]  # width of the image, in pixels, unused
+        # h = img_arr[1]  # height of the image, in pixels, unused
+        rgb = img_arr[2]  # color data RGB
+        # dep = img_arr[3]  # depth data, unused (but comes for free)
+
+        return rgb

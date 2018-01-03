@@ -70,7 +70,6 @@ if DEBUG:
 #### camera stuff
 
 cameraUp = [0, 0, 1]
-camera_pos_relative_to_base = np.array([.175, 0, .175])  # from URDF
 camDistance = 4
 pixelWidth = 320
 pixelHeight = 200

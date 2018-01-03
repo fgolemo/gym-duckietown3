@@ -2,40 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="814489f0-709f-499a-a2d5-625bf669c9ca" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/distance_to_target_env.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/generic_env.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/lane_following_env.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/straight_env.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/maps/full_loop_4x3.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/maps/straight_line_3x1.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/road_layout.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gym_duckietown3/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/test_circle_distribution.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/make_urdf.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/road_configs/road_conf_01.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_plain.mtl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_plain.obj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_plain.urdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_turn.mtl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_turn.obj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/road_turn.urdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/textures/road_plain.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/road/textures/road_turn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/robot_clean.urdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/robot_gazebo.urdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/src/macros.xacro" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/src/materials.xacro" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/src/mybot.gazebo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/assets/urdf/robot/src/simple.urdf.xacro" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/road_configs/__init__.py" afterPath="$PROJECT_DIR$/gym_duckietown3/envs/constants.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gym-duckietown3.iml" afterPath="$PROJECT_DIR$/.idea/gym-duckietown3.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TODO.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gym_duckietown3/__init__.py" afterPath="$PROJECT_DIR$/gym_duckietown3/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_pybullet_roadmaker.py" afterPath="$PROJECT_DIR$/tests/test_pybullet_roadmaker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/3link_gripper_push_2d-colored.xml" afterPath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/3link_gripper_push_2d-colored.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/3link_gripper_push_2d.xml" afterPath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/3link_gripper_push_2d.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/half_cheetah-colored.xml" afterPath="$PROJECT_DIR$/../gym-throwandpush/gym_throwandpush/envs/assets/half_cheetah-colored.xml" />
@@ -70,8 +38,8 @@
       <file leaf-file-name="test_pybullet_roadmaker.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_pybullet_roadmaker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="58" column="97" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="58" selection-end-column="97" />
+            <state relative-caret-position="1566">
+              <caret line="58" column="97" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="58" selection-end-column="97" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -123,11 +91,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generic_env.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TODO.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TODO.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="216">
+                <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="generic_env.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gym_duckietown3/envs/generic_env.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="109" column="39" lean-forward="true" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+            <state relative-caret-position="1971">
+              <caret line="109" column="39" lean-forward="false" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -213,6 +194,7 @@
         <option value="$PROJECT_DIR$/tests/test_circle_distribution.py" />
         <option value="$PROJECT_DIR$/gym_duckietown3/utils.py" />
         <option value="$PROJECT_DIR$/gym_duckietown3/envs/generic_env.py" />
+        <option value="$PROJECT_DIR$/TODO.md" />
       </list>
     </option>
   </component>
@@ -353,6 +335,19 @@
               <item name="gym-duckietown3" type="b2602c69:ProjectViewProjectNode" />
               <item name="gym-duckietown3" type="462c0819:PsiDirectoryNode" />
               <item name="gym_duckietown3" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gym-duckietown3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gym-duckietown3" type="462c0819:PsiDirectoryNode" />
+              <item name="gym_duckietown3" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="urdf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gym-duckietown3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gym-duckietown3" type="462c0819:PsiDirectoryNode" />
+              <item name="gym_duckietown3" type="462c0819:PsiDirectoryNode" />
               <item name="envs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -360,11 +355,6 @@
               <item name="gym-duckietown3" type="462c0819:PsiDirectoryNode" />
               <item name="gym_duckietown3" type="462c0819:PsiDirectoryNode" />
               <item name="maps" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gym-duckietown3" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gym-duckietown3" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -532,9 +522,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1402" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -568,24 +557,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gym_duckietown3/assets/urdf/robot/robot_clean.urdf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4968">
-          <caret line="184" column="16" lean-forward="false" selection-start-line="184" selection-start-column="16" selection-end-line="184" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_pybullet_roadmaker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_pybullet_planes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -842,14 +813,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_duckietown3/assets/make_urdf.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="24" lean-forward="false" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gym_duckietown3/road_layout.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
@@ -910,6 +873,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gym_duckietown3/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gym_duckietown3/envs/generic_env.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1971">
+          <caret line="109" column="39" lean-forward="false" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gym_duckietown3/envs/straight_env.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -920,31 +909,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_duckietown3/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_pybullet_roadmaker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="58" column="97" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="58" selection-end-column="97" />
+        <state relative-caret-position="1566">
+          <caret line="58" column="97" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="58" selection-end-column="97" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gym_duckietown3/envs/generic_env.py">
+    <entry file="file://$PROJECT_DIR$/gym_duckietown3/assets/make_urdf.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="109" column="39" lean-forward="true" selection-start-line="109" selection-start-column="39" selection-end-line="109" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="81">
+          <caret line="3" column="24" lean-forward="false" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TODO.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="216">
+            <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

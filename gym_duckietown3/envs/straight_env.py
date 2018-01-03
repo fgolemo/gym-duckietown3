@@ -1,7 +1,5 @@
 import gym
-import numpy as np
 import time
-from gym import utils, error, spaces
 
 from gym_duckietown3.envs.distance_to_target_env import DistanceToTargetEnv
 from gym_duckietown3.maps.straight_line_3x1 import MapStraightLine3x1
@@ -21,15 +19,14 @@ class StraightEnv(DistanceToTargetEnv):
 
 
 if __name__ == '__main__':
-    import gym_duckietown3
+    import gym_duckietown3  # mandatory for next line
 
     env = gym.make("Duckiesim-StraightRoad-CPU-v0")
     env.reset()
-
     for i in range(100):
         env.render("human")
         action = env.action_space.sample()
-        print(action)
         obs, reward, done, misc = env.step(action)
-        print(obs, reward, done)
-        time.sleep(.5)
+        print(action, obs.shape, reward, done)
+
+        time.sleep(.1)

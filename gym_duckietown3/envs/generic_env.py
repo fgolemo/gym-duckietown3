@@ -1,6 +1,6 @@
 import gym
 import numpy as np
-import time
+import matplotlib.pyplot as plt
 
 import pybullet
 from gym import spaces
@@ -53,6 +53,18 @@ class GenericEnv(gym.Env):
 
         self.generate_map(self.map)
 
+        self.plt_ax = None  # placeholder for the window if render="human"
+
+        self.current_state_has_been_rendered = False
+        """ this will be set to true if the current state has already been rendered,
+            so that when using the step and human render function, there is no double-
+            rendering
+        """
+
+        self.observation_buffer = None
+        """ This is the buffer that is holding the last good rendering
+        """
+
     def _step(self, action):
         # TODO actually execute action
 
@@ -76,8 +88,22 @@ class GenericEnv(gym.Env):
         pass
 
     def _render(self, mode='human', close=False):
-        # TODO
-        pass
+        if not self.current_state_has_been_rendered:
+            obs = self.get_observation()
+        else:
+            obs = self.observation_buffer
+
+        if mode == "human":
+            # check if there is an existing window to render to
+            if self.plt_ax is None:
+                self.make_plt_window()
+
+            self.plt_img.set_data(obs)
+            self.plt_ax.plot([0])
+            plt.pause(0.001)  # I found this necessary - otherwise no visible img
+        else:
+            # if render mode is not human, then we just return the observation
+            return obs
 
     def _close(self):
         # TODO
@@ -205,6 +231,15 @@ class GenericEnv(gym.Env):
         # w = img_arr[0]  # width of the image, in pixels, unused
         # h = img_arr[1]  # height of the image, in pixels, unused
         rgb = img_arr[2]  # color data RGB
-        # dep = img_arr[3]  # depth data, unused (but comes for free)
+        # depth = img_arr[3]  # depth data, unused (but comes for free)
 
-        return rgb
+        self.observation_buffer = rgb[:, :, :3]  # IDK what the fourth dimension does here
+        self.current_state_has_been_rendered = True
+
+        return self.observation_buffer
+
+    def make_plt_window(self):
+        plt.ion()
+        img = [[1, 2, 3] * 50] * 100  # np.random.rand(200, 320)
+        self.plt_img = plt.imshow(img, interpolation='none', animated=True, label="blah")
+        self.plt_ax = plt.gca()

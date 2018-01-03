@@ -87,8 +87,7 @@ class GenericEnv(gym.Env):
         pass
 
     def _seed(self, seed=None):
-        # TODO should prolly force overwriting in child classes here (notimplemented exception)
-        pass
+        np.random.seed(seed)
 
     def _render(self, mode='human', close=False):
         if not self.current_state_has_been_rendered:
@@ -109,8 +108,8 @@ class GenericEnv(gym.Env):
             return obs
 
     def _close(self):
-        # TODO
-        pass
+        # TODO IDK - do we need this? Should maybe close the PLT window or something
+        pybullet.disconnect()
 
     def get_reward(self):
         """ Calculate the reward based on the current task
@@ -128,7 +127,7 @@ class GenericEnv(gym.Env):
         :return: anything really
         """
 
-        # (optional) should be overwritten by task
+        # (optional) can be overwritten by task
 
         return None
 

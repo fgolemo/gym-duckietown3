@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 """ Use with care. Slows down simulation dramatically.
 """
 

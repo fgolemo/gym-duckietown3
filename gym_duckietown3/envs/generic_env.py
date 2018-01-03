@@ -16,9 +16,9 @@ class GenericEnv(gym.Env):
         self.render_resolution = resolution
 
         if DEBUG:
-            self.physicsClient = pybullet.connect(p.GUI)  # use this only in case of em
+            self.physicsClient = pybullet.connect(pybullet.GUI)  # use this only in case of em
         else:
-            self.physicsClient = pybullet.connect(p.DIRECT)
+            self.physicsClient = pybullet.connect(pybullet.DIRECT)
 
         if self.renderer == "GPU":
             self.render_engine = pybullet.ER_BULLET_HARDWARE_OPENGL  # GPU, _might_ work headlessly
@@ -113,4 +113,9 @@ class GenericEnv(gym.Env):
             rand_angle = np.random.uniform(orn[0] + orn[1], orn[0] + orn[2])
             start_orn = [0, 0, np.deg2rad(rand_angle)]
 
-        self.robotId = pybullet.loadURDF(PATH_TO_URDF + "robot/robot_clean.urdf", start_pos, start_orn)
+        # print(start_pos, start_orn)
+        self.robotId = pybullet.loadURDF(
+            PATH_TO_URDF + "robot/robot_clean.urdf",
+            start_pos,
+            pybullet.getQuaternionFromEuler(start_orn)
+        )

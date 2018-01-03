@@ -13,7 +13,7 @@ class StraightEnv(DistanceToTargetEnv):
 
         self.target = (0, 4)  # center of topmost tile, this is where the reward is
         start_orientation = (90, -45, 45)  # starting orientation with random range of +/- 45 deg
-        start_position = (0, 0, 1)  # center x,y and radius of spawn circle
+        start_position = (0, 0, .75)  # center x,y and radius of spawn circle
 
         super().__init__(renderer)
 

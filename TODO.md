@@ -7,4 +7,6 @@ TODO
 - ~~add step function to distance_env~~
 - test everything with GUI
 - add human renderer with PLT
+- add resetting function
+- add detection of the car being out of bounds
 

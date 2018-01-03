@@ -37,3 +37,9 @@ PHYSICS_STEPS_PER_STEP = 3
 """ If this is bigger than 1, for each call to env.step() it will
     run multiple steps of the simulation.
 """
+
+DISTANCE_TO_TARGET_EPSILON = 0.1
+""" Small float value. If the distance between the car's base and 
+    the target coordinates is smaller than this value, the task 
+    is considered solved in the DistanceToTarget environments.
+"""

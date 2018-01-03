@@ -60,4 +60,5 @@ even without XServer. But if in doubt, use CPU renderer.
 ## 4 Road Configs
 
 TODO - but it's pretty well-documented. So in the meantime look at the file
-`gym_duckietown3/road_layout.py`
+`gym_duckietown3/road_layout.py` and at the example maps in the directory 
+`gym_duckietown3/maps`.

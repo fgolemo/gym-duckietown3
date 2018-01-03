@@ -5,32 +5,35 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
+from gym_duckietown3.maps.full_loop_4x3 import MapFullLoop4x3
+
 DEBUG = True
+RENDER_GPU = False
+PATH_TO_URDF = "../gym_duckietown3/assets/urdf/"
 
 if DEBUG:
     physicsClient = p.connect(p.GUI)  # or p.DIRECT for non-graphical version
 else:
     physicsClient = p.connect(p.DIRECT)
 
+if RENDER_GPU:
+    renderer = p.ER_BULLET_HARDWARE_OPENGL
+else:
+    renderer = p.ER_TINY_RENDERER
+
 p.setAdditionalSearchPath(pybullet_data.getDataPath())  # used by loadURDF
 p.setGravity(0, 0, -10)
 
 ## Road maker stuff
 
-# TODO: this could prolly be done better with a config file
-import importlib.util
+roadmap = MapFullLoop4x3()
 
-spec = importlib.util.spec_from_file_location("roaf_configs", "../assets/road_configs/road_conf_01.py")
-foo = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(foo)
-roadmap = foo.RoadMap()
-
-rm_height = roadmap.road_rez[0]
-rm_width = roadmap.road_rez[1]
+rm_height = roadmap.map_rez[0]
+rm_width = roadmap.map_rez[1]
 
 for row in range(rm_height):
     for col in range(rm_width):
-        tile_type, tile_rotation = roadmap.road_conf[rm_height - row - 1][col]
+        tile_type, tile_rotation = roadmap.map_conf[rm_height - row - 1][col]
 
         if tile_type == 0:
             continue
@@ -41,19 +44,19 @@ for row in range(rm_height):
         else:
             road_urdf = "turn"
 
-        actual_x = (roadmap.road_start[0] - (rm_height - row - 1)) * 2
-        actual_y = (col - roadmap.road_start[1]) * 2
+        actual_x = (roadmap.map_start[0] - (rm_height - row - 1)) * 2
+        actual_y = (col - roadmap.map_start[1]) * 2
         road_rotation = np.deg2rad(tile_rotation * 90)
 
         print(row, col, actual_x, actual_y)
 
         road_pos = [actual_y, actual_x, 0]
         road_orientation = p.getQuaternionFromEuler([0, 0, road_rotation])
-        road_id = p.loadURDF("../assets/urdf/road/road_{}.urdf".format(road_urdf), road_pos, road_orientation)
+        road_id = p.loadURDF(PATH_TO_URDF + "road/road_{}.urdf".format(road_urdf), road_pos, road_orientation)
 
-cubeStartPos = [0.5, 0, .2]
+cubeStartPos = [0.5, 0, .01]
 cubeStartOrientation = p.getQuaternionFromEuler([0, 0, np.deg2rad(90)])
-robotId = p.loadURDF("../assets/urdf/robot/robot_clean.urdf", cubeStartPos, cubeStartOrientation)
+robotId = p.loadURDF(PATH_TO_URDF + "robot/robot_clean.urdf", cubeStartPos, cubeStartOrientation)
 for i in range(p.getNumJoints(robotId)):
     print(p.getJointInfo(robotId, i))
 
@@ -83,9 +86,9 @@ fov = 60
 #### joint control stuff
 
 if DEBUG:
-    targetVelocityLeftSlider = p.addUserDebugParameter("wheelVelocityLeft", -20, 20, 0)
-    targetVelocityRightSlider = p.addUserDebugParameter("wheelVelocityRight", -20, 20, 0)
-    maxForceSlider = p.addUserDebugParameter("maxForce", 0, 20, 20)
+    targetVelocityLeftSlider = p.addUserDebugParameter("wheelVelocityLeft", -15, 15, 0)
+    targetVelocityRightSlider = p.addUserDebugParameter("wheelVelocityRight", -15, 15, 0)
+    maxForceSlider = p.addUserDebugParameter("maxForce", 0, 10, 10)
 
 wheels = {"left": 3, "right": 2}  # by looking at output of p.getJointInfo() in loop
 # also they are inverted in the model (or named badly)
@@ -131,7 +134,7 @@ while True:
     aspect = pixelWidth / pixelHeight
     projectionMatrix = p.computeProjectionMatrixFOV(fov, aspect, nearPlane, farPlane)
     img_arr = p.getCameraImage(pixelWidth, pixelHeight, view_matrix, projectionMatrix, shadow=1,
-                               lightDirection=[1, 1, 1], renderer=p.ER_TINY_RENDERER)
+                               lightDirection=[1, 1, 1], renderer=renderer)
     ## Renderer options:
     ## p.ER_TINY_RENDERER - CPU-based renderer
     ## p.ER_BULLET_HARDWARE_OPENGL - OpenGL-renderer

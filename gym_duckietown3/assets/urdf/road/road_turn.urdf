@@ -20,6 +20,7 @@
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
+            <contact_coefficients mu="1.0" kp="1.0" kd="1.0" />
             <geometry>
                 <box size="2 2 .01"/>
             </geometry>

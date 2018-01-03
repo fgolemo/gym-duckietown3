@@ -10,23 +10,6 @@ class DistanceToTargetEnv(GenericEnv):
     def __init__(self, renderer="CPU"):
         super().__init__(renderer)
 
-    def _step(self, a):
-        # TODO
-        pass
-
-
-    def _reset(self):
-        #TODO
-        pass
-
-    def _seed(self, seed=None):
-        #TODO
-        pass
-
-    def _render(self, mode='human', close=False):
-        #TODO
-        pass
-
-    def _close(self):
-        #TODO
-        pass
+    def get_reward(self):
+        # TODO implement this, based on distance from robot to self.target
+        return 0, False  # that's reward, done-ness

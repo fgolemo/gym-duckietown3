@@ -5,7 +5,7 @@ import time
 import pybullet
 from gym import spaces
 
-from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGHT_DIRECTION, SHADOW
+from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGHT_DIRECTION, SHADOW, ROBOT_CONTROL
 from gym_duckietown3.road_layout import RoadLayout
 from gym_duckietown3.utils import get_point_from_circle_distribution
 
@@ -41,10 +41,14 @@ class GenericEnv(gym.Env):
 
         self._seed()
 
-        if self.cam_params is None:
+        if not hasattr(self, 'cam_params') or self.cam_params is None:
             self.cam_params = CAM_PARAMS
 
-        if self.map is None:
+        if not hasattr(self, 'robot_control') or self.robot_control is None:
+            self.robot_control = ROBOT_CONTROL
+
+        if not hasattr(self, 'map') or self.map is None:
+            # if map wasn't defined in super class before init, then get demo map
             self.map = RoadLayout()
 
         self.generate_map(self.map)
@@ -195,7 +199,7 @@ class GenericEnv(gym.Env):
             projectionMatrix,
             shadow=SHADOW,
             lightDirection=LIGHT_DIRECTION,
-            renderer=self.renderer
+            renderer=self.render_engine
         )
 
         # w = img_arr[0]  # width of the image, in pixels, unused

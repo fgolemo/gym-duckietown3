@@ -57,6 +57,22 @@ but with OpenGL/GPU rendering engine. Potentially faster than CPU
 rendering. **Might** work on a cluster, 
 even without XServer. But if in doubt, use CPU renderer.
 
+In order to run these environments you can do the usual `env.make(X)` 
+where X is the name of the environment as listed above. For example:
+
+    import gym_duckietown3
+    
+    env = gym.make("Duckiesim-StraightRoad-CPU-v0")
+    env.reset()
+    
+    for i in range(100):
+        env.render("human")
+        action = env.action_space.sample()
+        obs, reward, done, misc = env.step(action)
+        print(action, obs.shape, reward, done)
+
+        time.sleep(.1)
+
 ## 4 Road Configs
 
 TODO - but it's pretty well-documented. So in the meantime look at the file

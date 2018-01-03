@@ -8,11 +8,11 @@ PATH_TO_URDF = "../assets/urdf/"
 class CamParams(object):
     cameraUp = [0, 0, 1]
     camDistance = 4
-    pixelWidth = 320
-    pixelHeight = 200
+    pixelWidth = 320 # for best gym-compatibility this should be set to 84 in practice
+    pixelHeight = 200 # this too: set to 84 in production
     nearPlane = 0.01
     farPlane = 100
-    fov = 60
+    fov = 60 # this should be tuned to be close to the actual robot's FOV (or randomized)
 
 CAM_PARAMS = CamParams()
 

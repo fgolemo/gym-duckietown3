@@ -32,3 +32,8 @@ class RobotControl(object):
     max_force = 10
 
 ROBOT_CONTROL = RobotControl()
+
+PHYSICS_STEPS_PER_STEP = 3
+""" If this is bigger than 1, for each call to env.step() it will
+    run multiple steps of the simulation.
+"""

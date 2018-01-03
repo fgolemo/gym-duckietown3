@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import pybullet
 from gym import spaces
 
-from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGHT_DIRECTION, SHADOW, ROBOT_CONTROL
+from gym_duckietown3.envs.constants import DEBUG, PATH_TO_URDF, CAM_PARAMS, LIGHT_DIRECTION, SHADOW, ROBOT_CONTROL, \
+    PHYSICS_STEPS_PER_STEP
 from gym_duckietown3.road_layout import RoadLayout
 from gym_duckietown3.utils import get_point_from_circle_distribution
 
@@ -53,6 +54,8 @@ class GenericEnv(gym.Env):
 
         self.generate_map(self.map)
 
+        self.wheels = {"left": 3, "right": 2}  # by looking at output of pybullet.getJointInfo()
+
         self.plt_ax = None  # placeholder for the window if render="human"
 
         self.current_state_has_been_rendered = False
@@ -66,7 +69,7 @@ class GenericEnv(gym.Env):
         """
 
     def _step(self, action):
-        # TODO actually execute action
+        self.run_action(action)
 
         obs = self.get_observation()
         rew, done = self.get_reward()
@@ -128,6 +131,54 @@ class GenericEnv(gym.Env):
         # (optional) should be overwritten by task
 
         return None
+
+    def denormalize_action(self, action_value, scaling):
+        """ Because actions are normalized to range [0,1] this has to be scaled up
+            to the max velocity of the wheel in positive and negative range
+            E.g. if the actual wheel velocity range is [-10,10]
+            then 0 becomes -10, 0.5 becomes 0, and 1 becomes +10.
+
+
+        :param action_value: the action value for a single wheel in range [0,1]
+        :param scaling: the max speed for this wheel
+        :return: float scaled action
+        """
+        return action_value * scaling * 2 - scaling
+
+    def run_action(self, action):
+        ## left wheel
+
+        left_wheel_action = self.denormalize_action(
+            action[0],
+            self.robot_control.wheel_max_speed_left
+        )
+
+        pybullet.setJointMotorControl2(
+            self.robotId,
+            self.wheels["left"],
+            pybullet.VELOCITY_CONTROL,
+            targetVelocity=left_wheel_action,
+            force=self.robot_control.max_force
+        )
+
+        ## right wheel
+
+        right_wheel_action = self.denormalize_action(
+            action[1],
+            self.robot_control.wheel_max_speed_right
+        )
+
+        pybullet.setJointMotorControl2(
+            self.robotId,
+            self.wheels["right"],
+            pybullet.VELOCITY_CONTROL,
+            targetVelocity=right_wheel_action,
+            force=self.robot_control.max_force
+        )
+
+        ## finally run the physics engine
+        for _ in range(PHYSICS_STEPS_PER_STEP):
+            pybullet.stepSimulation()
 
     def generate_map(self, map):
         rm_height = map.map_rez[0]
@@ -240,6 +291,6 @@ class GenericEnv(gym.Env):
 
     def make_plt_window(self):
         plt.ion()
-        img = [[1, 2, 3] * 50] * 100  # np.random.rand(200, 320)
+        img = np.random.uniform(0, 255, (self.cam_params.pixelHeight, self.cam_params.pixelWidth, 3))
         self.plt_img = plt.imshow(img, interpolation='none', animated=True, label="blah")
         self.plt_ax = plt.gca()

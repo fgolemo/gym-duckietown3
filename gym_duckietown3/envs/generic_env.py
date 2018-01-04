@@ -14,6 +14,7 @@ ERROR_SHOULD_SPAWN_FIRST = "Child class hasn't spawned car yet. " \
                            "Look at straight_env.py for an example of how and " \
                            "when to spawn the car."
 
+
 class GenericEnv(gym.Env):
     def __init__(self, renderer="CPU", resolution=(84, 84), max_torque=10):
         self.renderer = renderer
@@ -86,9 +87,7 @@ class GenericEnv(gym.Env):
         misc = self.get_misc()
 
         if not done:
-            # TODO see if the robot is out of bounds by position
-            # done = self.is_out_of_bounds()
-            pass
+            done = self.is_out_of_bounds()
 
         return obs, rew, done, misc
 
@@ -322,3 +321,33 @@ class GenericEnv(gym.Env):
         img = np.random.uniform(0, 255, (self.cam_params.pixelHeight, self.cam_params.pixelWidth, 3))
         self.plt_img = plt.imshow(img, interpolation='none', animated=True, label="blah")
         self.plt_ax = plt.gca()
+
+    def is_out_of_bounds(self):
+        # self.get_current_bounds()
+        car_pos, _ = pybullet.getBasePositionAndOrientation(self.robotId)
+        # a more sophisticated way of checking woul be to use self.is_valid_tile()
+
+        if car_pos[2] <= 0.004:
+            return True  # robot fell
+        else:
+            return False  # robot prolly on map
+
+    def is_valid_tile(self, car_pos):
+        map_row, map_col = self.get_current_tile(car_pos)
+        out_of_bounds_vert = map_row < 0 or map_row > (self.map.map_rez[0] - 1)
+        out_of_bounds_horz = map_col < 0 or map_col > (self.map.map_rez[1] - 1)
+
+        if out_of_bounds_vert or out_of_bounds_horz:
+            # then the robot is out of bounds and there is guaranteed to be no tile here
+            return False
+        else:
+            # get the tile config here
+            tile_type, _ = self.map.map_conf[map_row][map_col]
+            if tile_type == 0:
+                return False
+        return True
+
+    def get_current_tile(self, car_pos):
+        map_row = self.map.map_start[0] - round(car_pos[0] / 2)
+        map_col = round(car_pos[1] / 2) + self.map.map_start[1]
+        return map_row, map_col

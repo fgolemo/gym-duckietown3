@@ -1,4 +1,3 @@
-
 from gym.envs.registration import register
 
 """
@@ -9,7 +8,7 @@ randomness: starting position (within a circle) and starting orientation (within
 register(
     id='Duckiesim-StraightRoad-CPU-v0',
     entry_point='gym_duckietown3.envs:StraightEnv',
-    # max_episode_steps=100, # TODO add this back later when we have an estimate
+    max_episode_steps=1000,
     # reward_threshold=0.0,
     kwargs={'renderer': 'CPU'}
 )
@@ -17,7 +16,7 @@ register(
 register(
     id='Duckiesim-StraightRoad-GPU-v0',
     entry_point='gym_duckietown3.envs:StraightEnv',
-    # max_episode_steps=100, # TODO add this back later when we have an estimate
+    max_episode_steps=1000,
     # reward_threshold=0.0,
     kwargs={'renderer': 'GPU'}
 )

@@ -24,4 +24,4 @@ class DistanceToTargetEnv(GenericEnv):
         if dist < DISTANCE_TO_TARGET_EPSILON:
             done = True
 
-        return dist, done  # that's reward, done-ness
+        return -dist, done  # that's reward, done-ness

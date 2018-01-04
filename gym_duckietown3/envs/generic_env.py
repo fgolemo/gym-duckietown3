@@ -16,9 +16,9 @@ ERROR_SHOULD_SPAWN_FIRST = "Child class hasn't spawned car yet. " \
 
 
 class GenericEnv(gym.Env):
-    def __init__(self, renderer="CPU", resolution=(84, 84), max_torque=10):
+    def __init__(self, renderer="CPU"):
         self.renderer = renderer
-        self.render_resolution = resolution
+        self.render_resolution = (CAM_PARAMS.pixelWidth, CAM_PARAMS.pixelHeight)
 
         if DEBUG:
             self.physicsClient = pybullet.connect(pybullet.GUI)  # use this only in case of em
@@ -93,6 +93,8 @@ class GenericEnv(gym.Env):
 
     def _reset(self):
         self.reset_position()
+        obs = self.get_observation()
+        return obs
 
     def _seed(self, seed=None):
         np.random.seed(seed)
@@ -308,7 +310,7 @@ class GenericEnv(gym.Env):
 
         # w = img_arr[0]  # width of the image, in pixels, unused
         # h = img_arr[1]  # height of the image, in pixels, unused
-        rgb = img_arr[2]  # color data RGB
+        rgb = np.array(img_arr[2])  # color data RGB
         # depth = img_arr[3]  # depth data, unused (but comes for free)
 
         self.observation_buffer = rgb[:, :, :3]  # IDK what the fourth dimension does here

@@ -17,6 +17,10 @@ class StraightEnv(DistanceToTargetEnv):
 
         self.spawn_car(start_position, start_orientation)
 
+    def get_reward(self):
+        rew, done = super(StraightEnv, self).get_reward()
+        # 5.1 is highest possible
+        return 5.1+rew, done
 
 if __name__ == '__main__':
     import gym_duckietown3  # mandatory for next line

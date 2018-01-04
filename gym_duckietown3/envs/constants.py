@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 """ Use with care. Slows down simulation dramatically.
     And only works locally (i.e. you need a non-fake XServer)
 """

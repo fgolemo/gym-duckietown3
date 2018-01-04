@@ -40,8 +40,8 @@ class GenericEnv(gym.Env):
                                             shape=(self.render_resolution[0], self.render_resolution[1], 3))
 
         self.action_space = spaces.Box(
-            -np.ones(2),
-            np.ones(2)
+            np.zeros(2), # minima: (0,0)
+            np.ones(2) # maxima: (1,1)
         )
 
         self._seed()

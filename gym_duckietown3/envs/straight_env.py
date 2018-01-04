@@ -27,10 +27,19 @@ if __name__ == '__main__':
 
     env = gym.make("Duckiesim-StraightRoad-CPU-v0")
     env.reset()
-    for i in range(100):
+    for i in range(20):
         env.render("human")
         action = env.action_space.sample()
         obs, reward, done, misc = env.step(action)
-        print(action, obs.shape, reward, done)
+        print(action, obs.shape, reward, done, misc)
+
+        time.sleep(.1)
+
+    env.reset()
+    for i in range(20):
+        env.render("human")
+        action = env.action_space.sample()
+        obs, reward, done, misc = env.step(action)
+        print(action, obs.shape, reward, done, misc)
 
         time.sleep(.1)

@@ -139,7 +139,7 @@ class GenericEnv(gym.Env):
 
         # (optional) can be overwritten by task
 
-        return None
+        return {}
 
     def denormalize_action(self, action_value, scaling):
         """ Because actions are normalized to range [0,1] this has to be scaled up

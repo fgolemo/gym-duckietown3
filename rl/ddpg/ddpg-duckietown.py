@@ -6,8 +6,7 @@ from ddpg.args import Args
 from ddpg.ddpg import DDPG
 from ddpg.evaluator import Evaluator
 from ddpg.main import train, test
-from ddpg.normalized_env import NormalizedEnv
-
+from ddpg.normalized_env import NormalizedEnv, NormalizedObsEnv
 
 ddpg_args = Args()
 
@@ -24,13 +23,14 @@ try:
 except:
     hyperdash_support = False
 
-env = NormalizedEnv(gym.make(args.env))
+env = NormalizedObsEnv(NormalizedEnv(gym.make(args.env)))
 
 if args.seed > 0:
     np.random.seed(args.seed)
     env.seed(args.seed)
 
-nb_states = env.observation_space.shape[0]
+# nb_states = env.observation_space.shape[0]
+nb_states = 84 * 84 * 3
 nb_actions = env.action_space.shape[0]
 
 agent = DDPG(nb_states, nb_actions, args)

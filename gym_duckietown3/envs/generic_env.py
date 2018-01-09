@@ -208,8 +208,6 @@ class GenericEnv(gym.Env):
                 actual_y = (col - map.map_start[1]) * 2
                 road_rotation = np.deg2rad(tile_rotation * 90)
 
-                print(row, col, actual_x, actual_y)
-
                 road_pos = [actual_y, actual_x, 0]
                 road_orientation = pybullet.getQuaternionFromEuler([0, 0, road_rotation])
                 _ = pybullet.loadURDF(PATH_TO_URDF + "road/road_{}.urdf".format(road_urdf), road_pos, road_orientation)

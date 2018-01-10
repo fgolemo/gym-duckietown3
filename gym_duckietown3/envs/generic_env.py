@@ -155,6 +155,9 @@ class GenericEnv(gym.Env):
         return action_value * scaling * 2 - scaling
 
     def run_action(self, action):
+        # clamp action
+        action = np.clip(action, 0, 1)
+
         ## left wheel
 
         left_wheel_action = self.denormalize_action(
